@@ -13,7 +13,7 @@ class Users::OperationsController < ApplicationController
     if @operation.save
       render json: @operation, status: :created
     else
-      render json: @operation, status: :unprocessable_entity
+      render json: @operation, serializer: ErrorSerializer, status: :unprocessable_entity
     end
   end
 
