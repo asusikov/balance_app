@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Operation.destroy_all
+User.destroy_all
+
+User.create! username: "Fry"
+User.create! username: "Bender"
+User.create! username: "Leela"
+User.create! username: "Zoidberg"
+User.create! username: "Amy"
+
+User.all.each do |user|
+  5.times { user.operations.create! value: 10 - rand(20), datetime: DateTime.now }
+end

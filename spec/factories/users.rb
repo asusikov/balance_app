@@ -3,5 +3,6 @@ FactoryBot.define do
     sequence :username do |n|
       "User #{n}"
     end
+    balance 120
   end
 end
