@@ -1,15 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "Operations", type: :request do
+RSpec.describe 'Operations', type: :request do
   let(:user) { create :user }
-  describe "GET /user/:id/operations" do
+  describe 'GET /user/:id/operations' do
     let!(:user_operations) { create_list :operation, 5, user: user }
     let!(:operations) { create_list :operation, 5 }
-    describe "status of response" do
-      subject { get(user_operations_path(user.id)); response }
+    describe 'status of response' do
+      subject do
+        get(user_operations_path(user.id))
+        response
+      end
       it { is_expected.to have_http_status(:success) }
     end
-    describe "numbers of users" do
+    describe 'numbers of users' do
       subject do
         get user_operations_path(user.id)
         JSON.parse(response.body)['data'].length
@@ -18,9 +21,9 @@ RSpec.describe "Operations", type: :request do
     end
   end
 
-  describe "POST /user/:id/operations" do
+  describe 'POST /user/:id/operations' do
     let(:value) { 50 }
-    let(:datetime) { DateTime.now }
+    let(:datetime) { Time.now }
     let(:request_params) do
       {
         params: {
@@ -34,7 +37,7 @@ RSpec.describe "Operations", type: :request do
         }
       }
     end
-    describe "status of response" do
+    describe 'status of response' do
       subject do
         post user_operations_path(user.id), request_params
         response
@@ -52,13 +55,16 @@ RSpec.describe "Operations", type: :request do
     end
   end
 
-  describe "DELETE /user/:user_id/operations/:id" do
+  describe 'DELETE /user/:user_id/operations/:id' do
     let!(:operation) { create :operation, user: user }
-    describe "statue of response" do
-      subject { delete user_operation_path(user.id, operation.id); response }
+    describe 'statue of response' do
+      subject do
+        delete user_operation_path(user.id, operation.id)
+        response
+      end
       it { is_expected.to have_http_status(:no_content) }
     end
-    describe "result" do
+    describe 'result' do
       subject { -> { delete user_operation_path(user.id, operation.id) } }
       it { is_expected.to change(user.operations, :count).by(-1) }
     end
