@@ -17,5 +17,4 @@ class Operation < ApplicationRecord
     user.balance -= value
     user.save!
   end
-
 end
