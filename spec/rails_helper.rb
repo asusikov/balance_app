@@ -10,6 +10,7 @@ require 'support/factory_bot'
 require 'shoulda/matchers'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+Dir[File.expand_path('../../app/validations/*.rb', __FILE__)].sort.each { |file| require file }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
