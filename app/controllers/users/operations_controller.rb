@@ -8,9 +8,9 @@ class Users::OperationsController < ApplicationController
   end
 
   def create
-    @operation = @user.operations.new(operation_attributes)
+    result = Transactions::CreateOperation.new.call(operation_attributes)
 
-    if @operation.save
+    if result.success?
       render json: @operation, status: :created
     else
       render json: @operation, serializer: ErrorSerializer, status: :unprocessable_entity

@@ -1,12 +1,35 @@
-class CreateOperation
-  include Dry::Transaction
+module Transactions
+  class CreateOperation
+    include Dependicies::Transaction
+    include Dependicies::Import[:create_operation_schema]
+    # locking database
+    # transaction
 
-  # locking database
-  # transaction
+    step :load_user
+    step :deserialize_params
+    step :validate_params
+    step :persist_operation
+    step :update_balance
 
-  step :load_user
-  step :deserialize_params
-  step :validate_params
-  step :persist_operation
-  step :update_balance
+    def load_user(input)
+      Success(input)
+    end
+
+    def deserialize_params(input)
+      Success(input)
+    end
+
+    def validate_params(input)
+      result = create_operation_schema.call(input[:operation_params])
+      result.success? ? Success(input) : result
+    end
+
+    def persist_operation(input)
+      Success(input)
+    end
+
+    def update_balance(input)
+      Success(input)
+    end
+  end
 end

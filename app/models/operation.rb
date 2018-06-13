@@ -1,7 +1,5 @@
 class Operation < ApplicationRecord
   belongs_to :user
-  validates :value, presence: true
-  validates :datetime, presence: true
 
   after_create :increase_balance
   after_destroy :decrease_balance
