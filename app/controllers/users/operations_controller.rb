@@ -8,12 +8,16 @@ class Users::OperationsController < ApplicationController
   end
 
   def create
-    result = Transactions::CreateOperation.new.call(operation_attributes)
-
-    if result.success?
-      render json: @operation, status: :created
-    else
-      render json: @operation, serializer: ErrorSerializer, status: :unprocessable_entity
+    Transactions::CreateOperation.new.call(operation_params: operation_attributes) do |result|
+      result.success do |operation|
+        render json: operation, status: :created
+      end
+      result.failure :validate_params do |validation|
+        render json: validation.errors, status: :unprocessable_entity
+      end
+      result.failure do
+        render json: { error: 'Internal Server Error' }, status: :internal_server_error
+      end
     end
   end
 
@@ -26,7 +30,7 @@ class Users::OperationsController < ApplicationController
   private
 
   def operation_attributes
-    params.require(:data).permit(attributes: [:value, :datetime])
+    params.require(:data).permit(attributes: [:value, :datetime]).to_h[:attributes]
   end
 
   def find_user

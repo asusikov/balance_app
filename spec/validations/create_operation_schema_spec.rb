@@ -13,7 +13,7 @@ RSpec.describe Validations::CreateOperationSchema do
       let(:value) { nil }
       it { is_expected.to be_falsey }
     end
-    context 'when value is not float' do
+    context 'when value is string' do
       let(:value) { '20' }
       it { is_expected.to be_falsey }
     end
@@ -25,7 +25,7 @@ RSpec.describe Validations::CreateOperationSchema do
       let(:datetime) { nil }
       it { is_expected.to be_falsey }
     end
-    context 'when datetime is not DateTime' do
+    context 'when datetime is string' do
       let(:datetime) { 'DateTime' }
       it { is_expected.to be_falsey }
     end

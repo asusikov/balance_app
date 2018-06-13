@@ -5,6 +5,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'dry-transaction'
 require 'dry-auto_inject'
 require 'dry-validation'
+
 Dir[File.expand_path('../../app/validations/*.rb', __FILE__)].sort.each { |file| require file }
 require File.expand_path('../../app/dependicies', __FILE__)
 

@@ -20,8 +20,8 @@ module Transactions
     end
 
     def validate_params(input)
-      result = create_operation_schema.call(input[:operation_params])
-      result.success? ? Success(input) : result
+      validation = create_operation_schema.call(input[:operation_params])
+      validation.success? ? Success(input) : Failure(validation)
     end
 
     def persist_operation(input)
