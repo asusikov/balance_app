@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Deserializers::Operation do
+RSpec.describe Deserializers::OperationDeserializer do
   let(:value) { 50 }
   let(:datetime) { DateTime.now }
   let(:params) do
@@ -16,7 +16,7 @@ RSpec.describe Deserializers::Operation do
       }
     }
   end
-  subject { Deserializers::Operation.new.call(params) }
+  subject { described_class.new.call(params) }
   its([:value]) { is_expected.to eq(value) }
   its([:datetime]) { is_expected.to eq(datetime) }
 end

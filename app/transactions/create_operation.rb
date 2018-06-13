@@ -5,14 +5,17 @@ module Transactions
     # locking database
     # transaction
 
-    step :load_user
+    step :find_user
     step :deserialize_params
     step :validate_params
     step :persist_operation
     step :update_balance
 
-    def load_user(input)
-      Success(input)
+    def find_user(user_id:, **args)
+      user = User.find(user_id)
+      Success(user: user, **args)
+    rescue ActiveRecord::RecordNotFound
+      Failure(user_id)
     end
 
     def deserialize_params(params:, **args)
@@ -25,8 +28,9 @@ module Transactions
       validation.success? ? Success(operation_params: operation_params, **args) : Failure(validation)
     end
 
-    def persist_operation(input)
-      Success(input)
+    def persist_operation(user:, operation_params:, **args)
+      user.operations.create!(operation_params)
+      Success(user: user, operation_params: operation_params, **args)
     end
 
     def update_balance(input)
