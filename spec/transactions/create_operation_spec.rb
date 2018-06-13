@@ -40,4 +40,13 @@ RSpec.describe Transactions::CreateOperation do
       it { is_expected.to be_falsey }
     end
   end
+  describe 'result' do
+    subject do
+      lambda do
+        described_class.new(transaction_dependencies).call(user_id: user_id, params: params)
+        user.reload
+      end
+    end
+    it { is_expected.to change(user, :balance).by(50) }
+  end
 end

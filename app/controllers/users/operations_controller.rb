@@ -8,9 +8,12 @@ class Users::OperationsController < ApplicationController
   end
 
   def create
-    Transactions::CreateOperation.new.call(params: params) do |result|
+    Transactions::CreateOperation.new.call(user_id: params[:user_id], params: params) do |result|
       result.success do |operation|
         render json: operation, status: :created
+      end
+      result.failure :find_user do |user_id|
+        render json: { error: "User #{user_id} not found" }, status: :not_found
       end
       result.failure :validate_params do |validation|
         render json: validation.errors, status: :unprocessable_entity

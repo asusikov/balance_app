@@ -1,15 +1,9 @@
 class Operation < ApplicationRecord
   belongs_to :user
 
-  after_create :increase_balance
   after_destroy :decrease_balance
 
   private
-
-  def increase_balance
-    user.balance += value
-    user.save!
-  end
 
   def decrease_balance
     user.balance -= value

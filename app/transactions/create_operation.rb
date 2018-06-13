@@ -19,7 +19,7 @@ module Transactions
     end
 
     def deserialize_params(params:, **args)
-      operation_params = operation_deserializer.new.call(params)
+      operation_params = operation_deserializer.new.call(params.to_unsafe_h)
       Success(operation_params: operation_params, **args)
     end
 
@@ -33,8 +33,10 @@ module Transactions
       Success(user: user, operation_params: operation_params, **args)
     end
 
-    def update_balance(input)
-      Success(input)
+    def update_balance(user:, operation_params:, **args)
+      balance = user.balance
+      user.update!(balance: balance + operation_params[:value])
+      Success(user: user, operation_params: operation_params, **args)
     end
   end
 end
