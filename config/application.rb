@@ -16,6 +16,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'dry-transaction'
+require 'dry-auto_inject'
+require 'dry-validation'
+require 'transproc/all'
+
 module App
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -26,5 +31,10 @@ module App
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.autoload_paths << Rails.root.join('app')
+    config.autoload_paths << Rails.root.join('app/validations')
+    config.autoload_paths << Rails.root.join('app/deserializers')
+    config.autoload_paths << Rails.root.join('app/transactions')
   end
 end

@@ -1,7 +1,7 @@
 module Transactions
   class CreateOperation
     include Dependicies::Transaction
-    include Dependicies::Import[:create_operation_schema]
+    include Dependicies::Import[:create_operation_schema, :operation_deserializer]
     # locking database
     # transaction
 
@@ -15,13 +15,14 @@ module Transactions
       Success(input)
     end
 
-    def deserialize_params(input)
-      Success(input)
+    def deserialize_params(params:, **args)
+      operation_params = operation_deserializer.new.call(params)
+      Success(operation_params: operation_params, **args)
     end
 
-    def validate_params(input)
-      validation = create_operation_schema.call(input[:operation_params])
-      validation.success? ? Success(input) : Failure(validation)
+    def validate_params(operation_params:, **args)
+      validation = create_operation_schema.call(operation_params)
+      validation.success? ? Success(operation_params: operation_params, **args) : Failure(validation)
     end
 
     def persist_operation(input)

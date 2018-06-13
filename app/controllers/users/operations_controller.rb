@@ -8,7 +8,7 @@ class Users::OperationsController < ApplicationController
   end
 
   def create
-    Transactions::CreateOperation.new.call(operation_params: operation_attributes) do |result|
+    Transactions::CreateOperation.new.call(params: params) do |result|
       result.success do |operation|
         render json: operation, status: :created
       end
@@ -28,10 +28,6 @@ class Users::OperationsController < ApplicationController
   end
 
   private
-
-  def operation_attributes
-    params.require(:data).permit(attributes: [:value, :datetime]).to_h[:attributes]
-  end
 
   def find_user
     @user = User.find(params[:user_id])
