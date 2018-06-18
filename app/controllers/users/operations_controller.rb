@@ -8,14 +8,18 @@ class Users::OperationsController < ApplicationController
   end
 
   def create
-    Transactions::CreateOperation.new.call(user_id: params[:user_id], params: params) do |result|
+    transaction_params = {
+      user_id: params[:user_id],
+      operation_params: operation_params
+    }
+    Transactions::Operations::Create.new.call(transaction_params) do |result|
       result.success do |operation|
         render json: operation, status: :created
       end
       result.failure :find_user do |user_id|
         render json: { error: "User #{user_id} not found" }, status: :not_found
       end
-      result.failure :validate_params do |validation|
+      result.failure :validate do |validation|
         render json: validation.errors, status: :unprocessable_entity
       end
       result.failure do
@@ -31,6 +35,10 @@ class Users::OperationsController < ApplicationController
   end
 
   private
+
+  def operation_params
+    params.require(:data).require(:attributes).permit(:value, :datetime)
+  end
 
   def find_user
     @user = User.find(params[:user_id])
