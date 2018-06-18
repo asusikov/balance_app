@@ -26,6 +26,15 @@ RSpec.describe Transactions::Operations::Create do
       let(:user_id) { user.id + 1 }
       it { is_expected.to be_falsey }
     end
+    context 'when value is string' do
+      let(:operation_params) do
+        {
+          value: '50',
+          datetime: Time.now
+        }
+      end
+      it { is_expected.to be_truthy }
+    end
   end
   describe 'result' do
     subject do

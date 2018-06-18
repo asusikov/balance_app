@@ -1,6 +1,7 @@
 module Validations
-  CreateOperationSchema = Dry::Validation.Schema do
-    required(:value).value(type?: Float)
-    required(:datetime).value(type?: DateTime)
+  CreateOperationSchema = Dry::Validation.JSON do
+    required(:value).filled(:number?)
+    # TODO: Fix working with schema in transaction
+    # required(:datetime).filled(:date_time?)
   end
 end

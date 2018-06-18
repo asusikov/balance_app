@@ -26,14 +26,14 @@ module Transactions
       end
 
       def persist(user:, operation_params:, **args)
-        user.operations.create!(operation_params)
-        Success(user: user, operation_params: operation_params, **args)
+        operation = user.operations.create!(operation_params)
+        Success(user: user, operation: operation, **args)
       end
 
-      def update_balance(user:, operation_params:, **args)
+      def update_balance(user:, operation:, **args)
         balance = user.balance
-        user.update!(balance: balance + operation_params[:value])
-        Success(user: user, operation_params: operation_params, **args)
+        user.update!(balance: balance + operation.value)
+        Success(user: user, operation: operation, **args)
       end
     end
   end
