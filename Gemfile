@@ -22,8 +22,8 @@ gem 'puma', '~> 3.0'
 
 gem 'active_model_serializers'
 gem 'dry-transaction'
-gem 'dry-monads'
-gem 'dry-validation'
+gem 'dry-monads', '~> 1.0'
+gem 'dry-validation', '~> 1.0'
 gem 'dry-auto_inject'
 gem 'transproc'
 
