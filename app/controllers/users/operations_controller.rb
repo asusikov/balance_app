@@ -37,7 +37,7 @@ class Users::OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:data).require(:attributes).permit(:value, :datetime)
+    params.require(:data).require(:attributes).permit(:value, :datetime).to_h.symbolize_keys
   end
 
   def find_user
