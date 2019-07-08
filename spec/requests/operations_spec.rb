@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Operations', type: :request do
@@ -6,7 +8,7 @@ RSpec.describe 'Operations', type: :request do
   describe 'GET /user/:id/operations' do
     let!(:user_operations) { create_list :operation, 5, user: user }
     let!(:operations) { create_list :operation, 5 }
- 
+
     describe 'status of response' do
       subject do
         get(user_operations_path(user.id))
@@ -15,7 +17,7 @@ RSpec.describe 'Operations', type: :request do
 
       it { is_expected.to have_http_status(:success) }
     end
-   
+
     describe 'numbers of users' do
       subject do
         get user_operations_path(user.id)

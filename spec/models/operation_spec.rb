@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Operation, type: :model do
-  describe "#destroy" do
+  describe '#destroy' do
     subject { -> { operation.destroy } }
 
     let!(:user) { create :user }

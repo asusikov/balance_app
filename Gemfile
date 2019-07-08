@@ -1,5 +1,6 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0', '>= 5.2.0.1'
@@ -21,18 +22,19 @@ gem 'puma', '~> 3.0'
 # gem 'rack-cors'
 
 gem 'active_model_serializers'
-gem 'dry-transaction'
-gem 'dry-monads', '~> 1.0'
-gem 'dry-validation', '~> 1.0'
 gem 'dry-auto_inject'
+gem 'dry-monads', '~> 1.0'
+gem 'dry-transaction'
+gem 'dry-validation', '~> 1.0'
+gem 'rubocop', '~> 0.72.0', require: false
 gem 'transproc'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'rspec-its'
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :test do
@@ -48,4 +50,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

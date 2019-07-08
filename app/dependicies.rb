@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dependicies
   module Container
     extend Dry::Container::Mixin

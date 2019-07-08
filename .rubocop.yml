@@ -1,0 +1,18 @@
+Metrics/BlockLength:
+  Exclude:
+  # RSpec DSL
+  - '**/*_spec.rb'
+  - '**/spec/**/*.rb'
+
+Style/MixinUsage:
+  Exclude:
+  - '**/bin/*'
+
+Metrics/LineLength:
+  Max: 120
+  
+Metrics/MethodLength:
+  Max: 25
+  
+Documentation:
+  Enabled: false

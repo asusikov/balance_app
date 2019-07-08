@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Deserializers
   class OperationDeserializer < Transproc::Transformer[Container]
     symbolize_keys

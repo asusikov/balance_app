@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # namespace :user do
   #   get 'operations/index'
@@ -18,7 +20,7 @@ Rails.application.routes.draw do
   # get 'user/index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users, only: [:index, :show] do
-    resources :operations, module: :users, only: [:index, :create, :destroy]
+  resources :users, only: %i[index show] do
+    resources :operations, module: :users, only: %i[index create destroy]
   end
 end
